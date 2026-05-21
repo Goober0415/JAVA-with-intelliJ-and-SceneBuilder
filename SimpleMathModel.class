@@ -1,0 +1,98 @@
+/****************************************
+* Ivonne Nelson - inelson1@cnm.edu
+*
+* SimpleMath -  Event Handling for buttons
+* 
+* SimpleMath.java
+****************************************/
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class SimpleMath extends JFrame{
+	private JLabel operandLabel, resultLabel, result;
+	private JTextField operand;
+	private JButton square, cube;
+	
+	public SimpleMath(){
+		super("Simple Math");
+		setLayout(new FlowLayout());
+		
+		//instnatiate components
+		operandLabel = new JLabel("Enter a number: ");
+		operand = new JTextField(5);  //creates a textfield 5 characters wide
+		
+		square = new JButton("Square");
+		cube = new JButton("Cube");
+		
+		resultLabel = new JLabel("Results");
+		result = new JLabel("???");  //label to hold result
+		
+		//add components to the window
+		add(operandLabel);
+		add(operand);
+		add(square);
+		add(cube);
+		add(resultLabel);
+		add(result);
+		
+		//add event handler to both buttons
+		square.addActionListener(new ButtonHandler());
+		//cube.addActionListener(new ButtonHandler());
+		
+		cube.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent event){
+				result.setText(String.valueOf(SimpleMathModel.cube(Double.parseDouble(operand.getText()))));
+			}
+		});
+		
+		setSize(185, 150);
+		setLocationRelativeTo(null);
+		setVisible(true);
+		
+	}
+	
+	private class ButtonHandler implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent event){
+			try{
+				double op = Double.parseDouble(operand.getText());
+				
+				//Which button was pressed?
+				//if(event.getSource() == square){
+					result.setText(String.valueOf(SimpleMathModel.square(op)));
+				//}else if(event.getSource() == cube){
+				//	result.setText(String.valueOf(SimpleMathModel.cube(op)));
+				//}
+			}catch (NumberFormatException e){
+				operandLabel.setText("Enter a number: ");
+				operand.setText("");
+				result.setText("???");
+			}
+		}
+	}
+	
+	public static void main(String [] args){
+		SimpleMath math = new SimpleMath();
+		math.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}
+
+				
+					
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
